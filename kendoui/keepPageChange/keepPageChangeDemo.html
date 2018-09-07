@@ -1,5 +1,4 @@
 <#include "../include/header.html" />
-<#include "../include/fssc.html" />
 <script type="text/javascript">
 
     var acctRuleId = ${RequestParameters.acctRuleId!0};
@@ -10,7 +9,7 @@
     var viewModel = Hap.createGridViewModel("#Grid");
 
     if (isEdit == 1) {
-        Cmf.showWaitingBar();
+        Hap.blockUI();
         $.ajax({
             url: BaseUrl + "/cmf/fin/acct/rules/query",
             type: "GET",
@@ -31,7 +30,7 @@
                             }
                         }
                     }
-                    Cmf.hideWaitingBar();
+                    Hap.unblockUI();
                 } else {
                     kendo.ui.showErrorDialog({
                         message: json.message
@@ -441,16 +440,7 @@
                 container.html(options.model.acctTypeDesc);
                 container.removeClass('k-edit-cell');
             }
-        }/*,{
-            field: "distTableName",
-            title: '<@spring.message "分配表名"/>',
-            attributes: {style: "text-align:center"},
-            width: 120,
-            editor: function (container, options) {
-                container.html(options.model.distTableName);
-                container.removeClass('k-edit-cell');
-            }
-        }*/, {
+        }, {
             field: "ownerTypeCode",
             title: '<@spring.message "cmf.fin.acctrules.ownertypecode"/>',
             attributes: {style: "text-align:center"},
